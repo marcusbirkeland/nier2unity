@@ -38,7 +38,8 @@ or
 9. An editor window should open. Normally, leave the first two values alone. Then select the shader you want to replace with a maskmap-compatible one. This should be the Standard shader most of the time. Then select the maskmap-compatible shader to replace with. Bundled with this zip are ReroStandardAutomata, and ReroStandardReplicant.
 11. Press "Set maskmaps" ! 
 
-![bilde](https://user-images.githubusercontent.com/36818485/130875097-bf2f802d-1373-4227-a2bf-530be3d1d830.png)
+![bilde](https://user-images.githubusercontent.com/36818485/130875382-01f30b5c-7fa5-40c1-b748-68af1b6b2b8f.png)
+
 
 12. DONE :D
 
