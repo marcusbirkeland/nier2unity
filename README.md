@@ -1,5 +1,10 @@
 # NieR2Unity
 A suite of tools to port maps from Nier/Astral Chain to Unity / VRCHAT. 
+**NOTE: THIS DOES NOT WORK WITH REPLICANT ATM, BECAUSE THE BLENDER PLUGIN DOES NOT YET OUTPUT JSON FILES**
+
+![banner](https://user-images.githubusercontent.com/36818485/130874731-4a7987f6-4522-44cb-9def-1076a375df32.png)
+
+
 
 ## Contents
 
@@ -7,8 +12,6 @@ A suite of tools to port maps from Nier/Astral Chain to Unity / VRCHAT.
 - MaskmapImporter: A tool for copying the maskmaps from the blender export to Unity.
 - A Unity Editor plugin that automatically replaces shaders and assigns maskmaps
 - Custom Rero-based shaders that support MSO(Automata/Astral Chain) or ORM (Replicant)maskmaps.
-
-![image smol](https://user-images.githubusercontent.com/36818485/130872143-1e5cf304-6b4e-41c1-84c1-e388934536ba.png)
 
 ## How to use
 
