@@ -23,10 +23,10 @@ A suite of tools to port maps from Nier/Astral Chain to Unity / VRCHAT.
 - Running the exe bundled inside the "MaskmapImporter" folder.
 or
 - Running ```python main.py``` in a command line window inside the MaskmapImporter folder.
+
 5. Now with the program, select your materials.json file (located in the same folder as the files you imported to blender). Select the texture directory where the maskmaps are, and finally select the directory inside your Unity project where you want them copied over to. Press the button!
 
-![python_k4X2lZOMuk](https://user-images.githubusercontent.com/36818485/130873691-6b5d6474-e394-4598-a113-40ef4e0eab7e.png)
-
+![smoler py](https://user-images.githubusercontent.com/36818485/130875055-2dcc9e02-c52b-4edf-95e6-7633aa6fa69c.png)
 
 7. Open Unity, and copy over the contents of the "Unity" folder included in this repository.
 8. Copy over the materials.json file into the root of the "Assets" folder.
@@ -35,10 +35,10 @@ or
 ![bilde](https://user-images.githubusercontent.com/36818485/130873243-291c3cd1-4abf-4d4b-9737-ff28b88733f2.png)
 
 9. An editor window should open. Normally, leave the first two values alone. Then select the shader you want to replace with a maskmap-compatible one. This should be the Standard shader most of the time. Then select the maskmap-compatible shader to replace with. Bundled with this zip are ReroStandardAutomata, and ReroStandardReplicant.
-
-![M88WuikK2s](https://user-images.githubusercontent.com/36818485/130873720-6134cda0-cb90-49cb-a8b5-b524fbf63810.png)
-
 11. Press "Set maskmaps" ! 
+
+![bilde](https://user-images.githubusercontent.com/36818485/130875097-bf2f802d-1373-4227-a2bf-530be3d1d830.png)
+
 12. DONE :D
 
 
