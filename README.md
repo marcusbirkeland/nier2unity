@@ -11,7 +11,7 @@ A suite of tools to port maps from Nier/Astral Chain to Unity / VRCHAT.
 
 - A custom version of Nier2Blender that creates a JSON file for the materials
 - MaskmapImporter: A tool for copying the maskmaps from the blender export to Unity.
-- A Unity Editor plugin that automatically replaces shaders and assigns maskmaps
+- A Unity Editor plugin that replaces shaders and assigns maskmaps to all materials
 - Custom Rero-based shaders that support MSO(Automata/Astral Chain) or ORM (Replicant)maskmaps.
 
 ## How to use
