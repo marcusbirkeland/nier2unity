@@ -29,7 +29,7 @@ or
 
 ![smoler py](https://user-images.githubusercontent.com/36818485/130875055-2dcc9e02-c52b-4edf-95e6-7633aa6fa69c.png)
 
-7. Open Unity, and copy over the contents of the "Unity" folder included in this repository.
+7. Open Unity, and copy over the contents of the "Unity" folder included in this repository to the "Assets" folder.
 8. Copy over the materials.json file into the root of the "Assets" folder.
 9. In the toolbar, click MC, and then MaskmapImporter
 
