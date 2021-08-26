@@ -266,7 +266,9 @@ half3 Emission(float2 uv)
 #ifdef _NORMALMAP
 half3 NormalInTangentSpace(float4 texcoords)
 {
-    half3 normalTangent = UnpackScaleNormal(tex2D (_BumpMap, texcoords.xy), _BumpScale);
+    half4 normalmap = tex2D(_BumpMap, texcoords.xy);
+    normalmap.g = 1.0f - normalmap.g;
+    half3 normalTangent = UnpackScaleNormal(normalmap, _BumpScale);
 
 #if _DETAIL && defined(UNITY_ENABLE_DETAIL_NORMALMAP)
     half mask = DetailMask(texcoords.xy);
