@@ -21,14 +21,15 @@ def importTextures(jsonPath, indir, outdir):
   files = [f for f in os.listdir(indir) if os.path.isfile(os.path.join(indir,f))]
   for material in jsonData:
     for f in files:
-      if not 'g_MaskMap' in jsonData[material]:
+      if not textureName.get() in jsonData[material]:
         break
-      maskmapIdentifier = jsonData[material]['g_MaskMap']
+      maskmapIdentifier = jsonData[material][textureName.get()]
       if f.__contains__(maskmapIdentifier):
         copyFiles(indir+'//'+f, outdir+'//'+f)
         completedTasks += 1
         updateProgress(len(jsonData), completedTasks, str(material))
         break
+  updateProgress(1, 1, "Done")
 
 def loadJson():
   filename = tk.filedialog.askopenfilename(initialdir="/", title="Select file", filetypes=(("json files", "*.json"),("all files", "*.*")))
@@ -78,10 +79,12 @@ def updateProgress(numTasks, completedTasks, currentTask):
 root = tk.Tk()
 root.resizable(False, False)
 root["bg"] = "black"
-root.title('MCs maskmap exporter')
+root.title('MCs texture importer')
 
 jsonFilename = tk.StringVar(root)
 textureDir = tk.StringVar(root)
+textureName = tk.StringVar(root)
+textureName.set("g_MaskMap")
 unityDir = tk.StringVar(root)
 errorMessage = tk.StringVar(root)
 progressPercent = tk.StringVar(root)
@@ -94,7 +97,7 @@ main.pack()
 titleFrame = tk.Frame(main, bg="#333", width=1000)
 titleFrame.pack()
 
-titleLabel = tk.Label(titleFrame, text="MC's maskmap importer!",fg="white", bg="#333", pady=32, font=("Arial", 24), width="20")
+titleLabel = tk.Label(titleFrame, text="MC's texture importer!",fg="white", bg="#333", pady=32, font=("Arial", 24), width="20")
 titleLabel.pack()
 
 mainFrame = tk.Frame(main, bg="#333", padx=24, pady=8)
@@ -108,21 +111,27 @@ jsonEntry.grid(row=1,column= 1, pady=4, )
 openJsonFile = tk.Button(mainFrame, text="Browse...", fg="white", bg="#222" ,command=loadJson, width=10)
 openJsonFile.grid(row=1, column= 2 , padx= 6, pady=4)
 
+# Texture Type Section
+typeLabel = tk.Label(mainFrame, text="Texture name:",fg="white", bg="#444", padx=2)
+typeLabel.grid(row=2,column= 0)
+typeEntry = tk.Entry(mainFrame, fg="white", bg="#222", width=48 , textvariable=textureName)
+typeEntry.grid(row=2,column= 1, pady=4, )
+
 # Texture Section
 textureLabel = tk.Label(mainFrame, text="Texture folder :",fg="white", bg="#444", padx=2)
-textureLabel.grid(row=2,column= 0)
+textureLabel.grid(row=3,column= 0)
 textureEntry = tk.Entry(mainFrame, fg="white", bg="#222", width=48, textvariable=textureDir)
-textureEntry.grid(row=2,column= 1, pady=4, )
+textureEntry.grid(row=3,column= 1, pady=4, )
 openTextureFolder = tk.Button(mainFrame, text="Browse...", fg="white", bg="#222" ,command=loadTextureDir, width=10,)
-openTextureFolder.grid(row=2, column= 2 , padx= 6, pady=4)
+openTextureFolder.grid(row=3, column= 2 , padx= 6, pady=4)
 
 # Unity Section
 unityLabel = tk.Label(mainFrame, text="Unity Texture Folder:",fg="white", bg="#444", padx=2)
-unityLabel.grid(row=3,column= 0)
+unityLabel.grid(row=4,column= 0)
 unityEntry = tk.Entry(mainFrame, fg="white", bg="#222", width=48, textvariable=unityDir)
-unityEntry.grid(row=3,column= 1, pady=4, )
+unityEntry.grid(row=4,column= 1, pady=4, )
 openUnityFolder = tk.Button(mainFrame, text="Browse...", fg="white", bg="#222" ,command=loadUnityDir, width=10)
-openUnityFolder.grid(row=3, column= 2 , padx= 6, pady=4)
+openUnityFolder.grid(row=4, column= 2 , padx= 6, pady=4)
 
 #Execute section
 execFrame = tk.Frame(main, bg="#333", width=1000)
