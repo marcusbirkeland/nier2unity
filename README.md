@@ -44,5 +44,7 @@ or
 12. DONE :D
 
 
+## KNOWN ISSUES
 
+- When using the maskmap tool in Unity, sometimes it doesn't detect the gameobjects in the scene. This is probably a Unity bug. To fix this, try reimporting the gameobject in the scene, or removing the object from the scene, and adding it again. 
 
