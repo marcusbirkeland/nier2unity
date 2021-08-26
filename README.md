@@ -17,7 +17,7 @@ A suite of tools to port maps from Nier/Astral Chain to Unity / VRCHAT.
 ## How to use
 
 1. Download this repository as a zip.
-2.  Install the version of Nier2Blender plugin bundled here.
+2.  Install the version of Nier2Blender plugin bundled here. **This version creates JSON files, which the original currently does not**
 3. Import the files you want in Unity with Blender. When importing files with this plugin, it will create a materials.json file. 
 - It is advised to have all the files you want to export to Unity in the same folder before importing with Blender. This way, all the identifiers are present in the materials.json file!
 4. After you have imported all the models you are going to use, open the importer program included here. You do this by either:
