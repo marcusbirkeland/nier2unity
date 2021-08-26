@@ -29,19 +29,19 @@ or
 
 ![smoler py](https://user-images.githubusercontent.com/36818485/130875055-2dcc9e02-c52b-4edf-95e6-7633aa6fa69c.png)
 
-7. Open Unity, and copy over the contents of the "Unity" folder included in this repository to the "Assets" folder.
-8. Copy over the materials.json file into the root of the "Assets" folder.
-9. In the toolbar, click MC, and then MaskmapImporter
+6. Open Unity, and copy over the contents of the "Unity" folder included in this repository to the "Assets" folder.
+7. Copy over the materials.json file into the root of the "Assets" folder.
+8. In the toolbar, click MC, and then MaskmapImporter
 
 ![bilde](https://user-images.githubusercontent.com/36818485/130873243-291c3cd1-4abf-4d4b-9737-ff28b88733f2.png)
 
 9. An editor window should open. Normally, leave the first two values alone. Then select the shader you want to replace with a maskmap-compatible one. This should be the Standard shader most of the time. Then select the maskmap-compatible shader to replace with. Bundled with this zip are ReroStandardAutomata, and ReroStandardReplicant.
-11. Press "Set maskmaps" ! 
+10. Press "Set maskmaps" ! 
 
 ![bilde](https://user-images.githubusercontent.com/36818485/130875382-01f30b5c-7fa5-40c1-b748-68af1b6b2b8f.png)
 
 
-12. DONE :D
+11. DONE :D
 
 
 ## KNOWN ISSUES
