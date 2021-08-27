@@ -5,16 +5,23 @@ using UnityEditor;
 using System.IO;
 using System;
 
+public enum OPTIONS
+{
+    ALBEDO = 0,
+    NORMAL = 1,
+    MASKMAP = 2
+}
 
 public class MaskMapImporter : EditorWindow
 {
+    public OPTIONS op;
     //string textureFolderPath = "Assets/Textures";
     string materialsJsonPath = "Assets/materials.json";
     string textureName = "g_MaskMap";
     Shader shaderToReplace;
     Shader shaderNew;
 
-    [MenuItem("MC / MaskmapImporter")]
+    [MenuItem("MC / Texture Importer")]
     public static void ShowWindow()
     {
         GetWindow(typeof(MaskMapImporter)); // Inheritedd from EditorWindow
@@ -27,16 +34,16 @@ public class MaskMapImporter : EditorWindow
 
     private void OnGUI()
     {
-        GUILayout.Label("MC's Maskmap Importer!");
+        GUILayout.Label("MC's Texture Importer!");
         //textureFolderPath = EditorGUILayout.TextField("Path to textures folder", textureFolderPath);
         materialsJsonPath = EditorGUILayout.TextField("Path to materials.json", materialsJsonPath);
+        op = (OPTIONS)EditorGUILayout.EnumPopup("Map to replace in shader:", op);
         textureName = EditorGUILayout.TextField("Tex name", textureName);
         shaderToReplace = EditorGUILayout.ObjectField("Shader to replace", shaderToReplace, typeof(Shader), false) as Shader;
         shaderNew = EditorGUILayout.ObjectField("New shader", shaderNew, typeof(Shader), false) as Shader;
-
-        if(GUILayout.Button("Set maskmaps!"))
+        if (GUILayout.Button("Set textures!"))
         {
-            setMaskmaps();
+            setTextures();
         }
     }
 
@@ -49,7 +56,23 @@ public class MaskMapImporter : EditorWindow
         return json;
     }
 
-    private void setMaskmaps()
+    private string getTextureOption() 
+    {
+        switch (op)
+        {
+            case OPTIONS.ALBEDO:
+                return  "_MainTex";
+            case OPTIONS.NORMAL:
+                return "_BumpMap";
+            case OPTIONS.MASKMAP:
+                return  "_MetallicGlossMap";
+            default:
+                Debug.LogError("Unrecognized Option");
+                return "";
+        }
+    }
+
+    private void setTextures()
     {
         var materialData = SimpleJSON.JSON.Parse(getJSONString());
         object[] obj = GameObject.FindObjectsOfType(typeof(GameObject));
@@ -70,7 +93,7 @@ public class MaskMapImporter : EditorWindow
             foreach (KeyValuePair<string,SimpleJSON.JSONNode> dict in materialData)
             {
                 //Debug.Log("dict key: " + dict.Key + "  materialname: " + material.name);
-                if (dict.Key.Equals(material.name) && dict.Value[textureName] != null && (material.shader.Equals(shaderToReplace) || material.shader.Equals(shaderNew)))
+                if (material.name.Contains(dict.Key) && dict.Value[textureName] != null && (material.shader.Equals(shaderToReplace) || material.shader.Equals(shaderNew)))
                 {
                     // Get the texture identifier from JSON
                     string identifier = dict.Value[textureName];
@@ -83,17 +106,27 @@ public class MaskMapImporter : EditorWindow
                     }
                     // Set the new shader
                     material.shader = shaderNew;
-                    material.EnableKeyword("_METALLICGLOSSMAP");
-                    material.EnableKeyword("_OCCLUSIONMAP");
+                    string textureSelector = getTextureOption();
                     // Get and set the maskmap texture
                     try
                     {
-                        Debug.Log("TEXTURE PATH: " + AssetDatabase.GUIDToAssetPath(guids[0]));
-                        material.SetTexture("_MetallicGlossMap", (Texture2D)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(guids[0]), typeof(Texture2D)));
-                        Debug.Log("Setting texture for " + material.name);
+                        if(guids.Length > 0)
+                        {
+                            Debug.Log("TEXTURE PATH: " + AssetDatabase.GUIDToAssetPath(guids[0]));
+                            material.SetTexture(textureSelector, (Texture2D)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(guids[0]), typeof(Texture2D)));
+                            Debug.Log("Setting texture for " + material.name);
+                            material.EnableKeyword("_METALLICGLOSSMAP");
+                            material.EnableKeyword("_OCCLUSIONMAP");
+                            material.EnableKeyword("_BUMPMAP");
+                            material.EnableKeyword("_NORMALMAP");
+                        }
+                        else
+                        {
+                            Debug.Log("Texture not found, skipping");
+                        }
                     } catch (Exception e)
                     {
-                        Debug.LogError("COULD NOT IMPORT TEXTURE:" + e.ToString());
+                        Debug.LogError("COULD NOT IMPORT TEXTURE " + material.name + "\n" + e.ToString());
                     }
 
                 }
