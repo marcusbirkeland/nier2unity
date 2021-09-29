@@ -111,28 +111,7 @@ public class TextureImporter : EditorWindow
                     material.shader = shaderNew;
                     string textureSelector = getTextureOption();
                     // Get and set the maskmap texture
-                    try
-                    {
-                        if (guids.Length > 0)
-                        {
-                            Debug.Log("TEXTURE PATH: " + AssetDatabase.GUIDToAssetPath(guids[0]));
-                            material.SetTexture(textureSelector, (Texture2D)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(guids[0]), typeof(Texture2D)));
-                            Debug.Log("Setting texture for " + material.name);
-                            material.EnableKeyword("_METALLICGLOSSMAP");
-                            material.EnableKeyword("_OCCLUSIONMAP");
-                            material.EnableKeyword("_BUMPMAP");
-                            material.EnableKeyword("_NORMALMAP");
-                        }
-                        else
-                        {
-                            Debug.Log("Texture not found, skipping");
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.LogError("COULD NOT IMPORT TEXTURE " + material.name + "\n" + e.ToString());
-                    }
-
+                    setTextureInMaterial(material, guids, textureSelector, textureSelector == "_MetallicGlossMap");
                 }
             }
         }
