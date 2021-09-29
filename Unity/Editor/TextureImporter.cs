@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -44,6 +44,10 @@ public class TextureImporter : EditorWindow
         if (GUILayout.Button("Set Textures!"))
         {
             setTextures();
+        }
+        if (GUILayout.Button("Set all textures"))
+        {
+            setAllTextures();
         }
     }
 
@@ -133,6 +137,78 @@ public class TextureImporter : EditorWindow
             }
         }
     }
+
+
+    private void setTextureInMaterial(Material material, String [] guids, String textureSelector, bool isMaskMap = false)
+    {
+        try
+        {
+            if (guids.Length > 0)
+            {
+                Debug.Log("TEXTURE PATH: " + AssetDatabase.GUIDToAssetPath(guids[0]));
+                material.SetTexture(textureSelector, (Texture2D)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(guids[0]), typeof(Texture2D)));
+                Debug.Log("Setting texture for " + material.name);
+                if (isMaskMap)
+                {
+                    material.EnableKeyword("_METALLICGLOSSMAP");
+                    material.EnableKeyword("_OCCLUSIONMAP");
+                }
+
+                material.EnableKeyword("_BUMPMAP");
+                material.EnableKeyword("_NORMALMAP");
+            }
+            else
+            {
+                Debug.Log("Texture not found, skipping");
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("COULD NOT IMPORT TEXTURE " + material.name + "\n" + e.ToString());
+        }
+    }
+
+    private void setAllTextures()
+    {
+        var materialData = SimpleJSON.JSON.Parse(getJSONString());
+        object[] obj = GameObject.FindObjectsOfType(typeof(GameObject));
+        //Debug.Log("Num game objects" + obj.Length);
+        foreach (object o in obj)
+        {
+            GameObject g = (GameObject)o;
+            //Fetch the GameObject's Renderer component
+            if (g.GetComponent<Renderer>() == null)
+            {
+                break;
+            }
+            Renderer r = g.GetComponent<Renderer>();
+            Material material = r.sharedMaterial;
+            Debug.Log("Current GameObject: " + g.name + "  Current material: " + material.name);
+            // Iterate over the materials in the json file, and match with a material in game
+            foreach (KeyValuePair<string, SimpleJSON.JSONNode> dict in materialData)
+            {
+                //Debug.Log("dict key: " + dict.Key + "  materialname: " + material.name);
+                if (material.name.Contains(dict.Key) && dict.Value[textureName] != null && (material.shader.Equals(shaderToReplace) || material.shader.Equals(shaderNew)))
+                {
+                    // Get the texture identifier from JSON
+                    string identifierAlbedo = dict.Value["g_AlbedoMap"];
+                    string identifierNormal = dict.Value["g_NormalMap"];
+                    string identifierMaskMap = dict.Value["g_MaskMap"];
+                    //Debug.Log("Identifier for " + material.name + "  =  " + identifier);
+                    // Get the GUID(s) of the texture from the assetDatabase
+                    string[] guidsAlbedo = AssetDatabase.FindAssets(identifierAlbedo);
+                    string[] guidsNormal = AssetDatabase.FindAssets(identifierNormal);
+                    string[] guidsMaskMap = AssetDatabase.FindAssets(identifierMaskMap);
+
+                    // Set the new shader
+                    material.shader = shaderNew;
+
+                    setTextureInMaterial(material, guidsAlbedo, "_MainTex");
+                    setTextureInMaterial(material, guidsNormal, "_BumpMap");
+                    setTextureInMaterial(material, guidsMaskMap, "_MetallicGlossMap", true);
+
+                }
+            }
+        }
+    }
 }
-
-
