@@ -41,11 +41,11 @@ public class TextureImporter : EditorWindow
         textureName = EditorGUILayout.TextField("Tex name", textureName);
         shaderToReplace = EditorGUILayout.ObjectField("Shader to replace", shaderToReplace, typeof(Shader), false) as Shader;
         shaderNew = EditorGUILayout.ObjectField("New shader", shaderNew, typeof(Shader), false) as Shader;
-        if (GUILayout.Button("Set Textures!"))
+        if (GUILayout.Button("Set textures (specified map)"))
         {
             setTextures();
         }
-        if (GUILayout.Button("Set all textures"))
+        if (GUILayout.Button("Set textures (all maps)"))
         {
             setAllTextures();
         }
